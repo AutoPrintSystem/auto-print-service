@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./guide.css">
+</head>
+
+<body>
+    <div class="main">
+        <h1 class="title">&nbsp;&nbsp;&nbsp;Remote Print</h1>
+        <div class="empty"></div>
+        <div class="contents">
+            <section class="webGuide">
+                <h2 class="subTitle">서비스 이용 가이드</h2>
+                <p>아래의 작업 스케줄러와 Poppler외부라이브러리를 다운로드를 진행해야 정상적인 프로그램 작동이 됩니다.</p>
+                <h3 data-ke-size="size23"><b>1) 장고 프로젝트내 사용자 정의 명령 만들기</b></h3>
+                <p data-ke-size="size16">작업 스케줄러를 통해 일정 주기마다 실행시키고 싶은 파일을 만드는 단계입니다.</p>
+                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcCMaTm%2Fbtsp8bvSQMJ%2FRtitRPRj8gJnbl9mVQIBqk%2Fimg.png"
+                    alt="">
+                <p data-ke-size="size16">=&gt; 이와 같이 앱 폴더 내에 management 폴더를 만들고 그 하위 폴더로 commads폴더를 만들어 줍니다.</p>
+                <p data-ke-size="size16">본 가이드에서는 preprint라는 앱 하위에 <span
+                        style="color: #333333; text-align: start;">management/commads
+                        디렉토리를 생성해 주었습니다.</span></p>
+                <p data-ke-size="size16"><span style="color: #333333; text-align: start;">이후 위 사진과 같이 management, <span
+                            style="color: #333333; text-align: start;">commads<span> 각 폴더에 __init__. py 파일을 추가해
+                                줍니다.</span></span></span></p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <h3 data-ke-size="size23"><b><span style="color: #333333; text-align: start;"><span
+                                style="color: #333333; text-align: start;"><span>2) 작업 스케줄러로 일정 주기마다 실행시키고 싶은 명령어를 작성할
+                                    파일
+                                    생성</span></span></span></b></h3>
+                <p data-ke-size="size16"><span style="color: #333333; text-align: start;"><span
+                            style="color: #333333; text-align: start;"><span>이제 commands 디렉터리 하위에 작업 스케줄러로 주기마다 실행시키려는
+                                파일을 생성하여 작성해 주면
+                                됩니다.</span></span></span></p>
+                <p data-ke-size="size16"><span style="color: #333333; text-align: start;"><span
+                            style="color: #333333; text-align: start;"><span>본 가이드의 경우는 reset_orders.py라는 파일을
+                                만들었습니다.</span></span></span></p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16"><b>-reset_orders.py-</b></p>
+                <div style="background-color: #1f1f1f; color: #cccccc;">
+                    <div><span style="color: #c586c0;">from</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">django</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">core</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">management</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">base</span><span style="color: #cccccc;"> </span><span
+                            style="color: #c586c0;">import</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">BaseCommand</span></div>
+                    <div><span style="color: #c586c0;">from</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">django</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">core</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">files</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">storage</span><span style="color: #cccccc;"> </span><span
+                            style="color: #c586c0;">import</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">default_storage</span></div>
+                    <div>&nbsp;</div>
+                    <br />
+                    <div><span style="color: #569cd6;">class</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">Command</span><span style="color: #cccccc;">(</span><span
+                            style="color: #4ec9b0;">BaseCommand</span><span style="color: #cccccc;">):</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">help</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;">
+                        </span><span style="color: #ce9178;">'Reset all orders and files'</span></div>
+                    <br />
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; </span><span
+                            style="color: #569cd6;">def</span><span style="color: #cccccc;"> </span><span
+                            style="color: #dcdcaa;">handle</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">self</span><span style="color: #cccccc;">,
+                        </span><span style="color: #d4d4d4;">*</span><span style="color: #9cdcfe;">args</span><span
+                            style="color: #cccccc;">, </span><span style="color: #d4d4d4;">**</span><span
+                            style="color: #9cdcfe;">options</span><span style="color: #cccccc;">):</span></div>
+                    <div>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</div>
+                    <div>&nbsp; &nbsp; &nbsp; &nbsp; # 실행시키고 싶은 코드</div>
+                    <br />
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">self</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">stdout</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">write</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">self</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">style</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">SUCCESS</span><span style="color: #cccccc;">(</span><span
+                            style="color: #ce9178;">'Successfully reset all orders and
+                            files.'</span><span style="color: #cccccc;">))</span></div>
+                </div>
+                <p data-ke-size="size16">=&gt; 기본 형식은 위와 같습니다.</p>
+                <p data-ke-size="size16">위의 코드를 그대로 복사한 후</p>
+                <p data-ke-size="size16">"실행시키고 싶은 코드" 부분에 주기마다 진행되었으면 하는 코드를 작성해 주면 됩니다.</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">본 가이드에서는 매일 8:40분에 Order와 OrderFile이라는 모델의 데이터를 삭제시켜주도록 코드를 작성하였습니다</p>
+
+                <div style="background-color: #1f1f1f; color: #cccccc;">
+                    <div><span style="color: #c586c0;">from</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">django</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">core</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">management</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">base</span><span style="color: #cccccc;"> </span><span
+                            style="color: #c586c0;">import</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">BaseCommand</span></div>
+                    <div><span style="color: #c586c0;">from</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">django</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">core</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">files</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">storage</span><span style="color: #cccccc;"> </span><span
+                            style="color: #c586c0;">import</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">default_storage</span></div>
+                    <div><span style="color: #c586c0;">from</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">preprint</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">models</span><span style="color: #cccccc;"> </span><span
+                            style="color: #c586c0;">import</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">Order</span><span style="color: #cccccc;">, </span><span
+                            style="color: #4ec9b0;">OrderFile</span><span style="color: #cccccc;"> &nbsp;</span></div>
+                    <br />
+                    <div><span style="color: #569cd6;">class</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">Command</span><span style="color: #cccccc;">(</span><span
+                            style="color: #4ec9b0;">BaseCommand</span><span style="color: #cccccc;">):</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">help</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;">
+                        </span><span style="color: #ce9178;">'Reset all orders and files'</span></div>
+                    <br />
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; </span><span
+                            style="color: #569cd6;">def</span><span style="color: #cccccc;"> </span><span
+                            style="color: #dcdcaa;">handle</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">self</span><span style="color: #cccccc;">,
+                        </span><span style="color: #d4d4d4;">*</span><span style="color: #9cdcfe;">args</span><span
+                            style="color: #cccccc;">, </span><span style="color: #d4d4d4;">**</span><span
+                            style="color: #9cdcfe;">options</span><span style="color: #cccccc;">):</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">orders</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">Order</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">objects</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">all</span><span style="color: #cccccc;">()</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">for</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">order</span><span style="color: #cccccc;">
+                        </span><span style="color: #c586c0;">in</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">orders</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">order_files</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">OrderFile</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">objects</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">filter</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">order</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #9cdcfe;">order</span><span style="color: #cccccc;">)</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">for</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">order_file</span><span style="color: #cccccc;"> </span><span
+                            style="color: #c586c0;">in</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">order_files</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        </span><span style="color: #c586c0;">if</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">default_storage</span><span
+                            style="color: #cccccc;">.exists(</span><span style="color: #9cdcfe;">order_file</span><span
+                            style="color: #cccccc;">.</span><span style="color: #9cdcfe;">file</span><span
+                            style="color: #cccccc;">.</span><span style="color: #9cdcfe;">name</span><span
+                            style="color: #cccccc;">):</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp;
+                        </span><span style="color: #9cdcfe;">default_storage</span><span
+                            style="color: #cccccc;">.delete(</span><span style="color: #9cdcfe;">order_file</span><span
+                            style="color: #cccccc;">.</span><span style="color: #9cdcfe;">file</span><span
+                            style="color: #cccccc;">.</span><span style="color: #9cdcfe;">name</span><span
+                            style="color: #cccccc;">)</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">order</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">delete</span><span style="color: #cccccc;">()</span></div>
+                    <br />
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">self</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">stdout</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">write</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">self</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">style</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">SUCCESS</span><span style="color: #cccccc;">(</span><span
+                            style="color: #ce9178;">'Successfully reset all orders and
+                            files.'</span><span style="color: #cccccc;">))</span></div>
+                </div>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <h3 data-ke-size="size23"><b>3) 작업 스케줄러 생성 및 설정</b></h3>
+                <h4 data-ke-size="size20"><b>1. 작업을 생성합니다.</b><span
+                        data-url="https://blog.kakaocdn.net/dn/n4Md6/btsqj4bfTpk/L0y3VJukhl1mNGKPU6d7r1/img.png"
+                        data-lightbox="lightbox"></span></h4>
+                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbaVmUz%2Fbtsp33FvMGh%2FnSEzIilEckXsOfXmSKJiKk%2Fimg.png"
+                    alt="">
+                <p style="color: #555555; text-align: start;" data-ke-size="size16">=&gt; 윈도우&nbsp;검색창에서 작업 스케줄러를 검색해
+                    실행하면 위와 같은 창이 뜹니다.
+                </p>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16">왼쪽 상단의 작업 스케줄러 라이브러리를 클릭하고 오른쪽 사이드
+                    메뉴에서 작업 만들기를
+                    클릭합니다.</p>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16">&nbsp;</p>
+                <h4 style="color: #555555; text-align: start;" data-ke-size="size20"><b>2. 일반 &gt; 작업 이름 작성 &amp; 권한
+                        설정</b></h4>
+                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FCBRoa%2Fbtsqh0muQbQ%2FKkkDbofRyJbPbg4XPvBMr0%2Fimg.png"
+                    alt="">
+                <p data-ke-size="size16">=&gt; 이제 위와 같이 이름란에 스케줄러의 이름을 정해주고</p>
+                <p data-ke-size="size16">가장 높은 수준의 권한으로 실행을 체크해 줍니다.</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">(혹 프로젝트가 해당 사용자 로그인이 되어있지 않아도 주기적으로 실행되어야 한다면</p>
+                <p data-ke-size="size16">사용자의 로그온 여부에 관계없이 실행으로 체크해 줍니다.)</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <h4 data-ke-size="size20"><b>3. 트리거 &gt; 반복 실행될 주기를 설정</b></h4>
+                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbnR9Ir%2Fbtsqj4h1TaO%2FhOaSY2jUTSaDi4nHX9HH0k%2Fimg.png"
+                    alt="">
+                <p data-ke-size="size16">=&gt; 트리거를 클릭 후 아래 새로 만들기 버튼을 클릭합니다.</p>
+                <p data-ke-size="size16">위 사진과 같은 팝업 창이 뜨게 되면 반복될 주기를 정할 수 있습니다.</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">본 가이드의 경우 매일 8:43:26 시간에 이 스케줄러가 작동하도록 설정하였습니다.</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">완료되었으면 확인을 클릭하세요</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">(아래 고급설정란에 작업반복 간격을 클릭하고 시간을 설정해 주면</p>
+                <p data-ke-size="size16">트리거 된 그 시점부터 반복 간격으로 설정한 시간마다 이 작업 스케줄러가 반복되니 참고하세요.)</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <h4 data-ke-size="size20"><b>4. 동작 &gt; 파이썬 경로, 인수 경로, 시작 위치 경로 설정</b></h4>
+                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FmzlZv%2FbtsqaO1aX13%2FrzpMlJvrrI5770DF1HRpD1%2Fimg.png"
+                    alt="">
+                <p data-ke-size="size16">=&gt; 가장 중요한 경로 설정입니다. 작업 스케줄러가 장고 프로젝트의 경로를 찾아서 manage.py파일을 통해,</p>
+                <p data-ke-size="size16"> 작성한 commands 하위 파일을 실행시키기 위해 경로 설정이 필요합니다.</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size18"><b>프로그램/스크립트</b></p>
+                <p data-ke-size="size16">위 프로그램/스크립트 입력창에는 <span style="color: #555555; text-align: start;">python.exe의
+                        경로를 입력해야
+                        합니다.</span></p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16"><span style="color: #ee2323;"><b>이 파이썬 경로는 컴퓨터에 설치된 <span
+                                style="text-align: start;">python.exe의 경로가 아닌 우리의 DJango 프로젝트 내의 가상환경에</span></b></span>
+                </p>
+                <p data-ke-size="size16"><span style="color: #ee2323;"><b><span style="text-align: start;">설치된 <span
+                                    style="text-align: start;">python.exe의 경로이다.</span></span></b></span></p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16"><b>python.exe 경로 찾기</b></p>
+                <p data-ke-size="size16"><span
+                        style="background-color: #1f1f1f; color: #cccccc; text-align: start;">where python</span>
+                </p>
+                <p data-ke-size="size16"><span style="color: #555555;">=&gt; 위 명령어를 장고 프로젝트에서 터미널을 열고 실행하면 파이썬 경로를 찾을 수
+                        있습니다.</span></p>
+                <p data-ke-size="size16">여러 경로가 출력되나 우리가 사용할 경로는 ~~\venv(가상환경 명)\Scripts\python.exe -&gt; 이러한 형식의 경로입니다.
+                </p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">본 가이드의 경우 경로는 아래와 같습니다.</p>
+                <p data-ke-size="size16">C:\Users\Owner\Documents\My-Project\pre-print-service\venv\Scripts\python.exe
+                </p>
+                <p data-ke-size="size16">=&gt; 이 경로를 프로그램/스크립트 란에 작성해 줍니다.</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size18"><b>인수 추가</b></p>
+                <p data-ke-size="size16">인수 추가란에는 <span style="color: #555555; text-align: start;">manage.py의 경로 &amp;
+                        명령어로
+                        설정한(reset_orders) 파일을 실행시키기 위한 인수를 작성합니다.</span></p>
+                <p data-ke-size="size16"><span style="color: #555555; text-align: start;">장고 프로젝트를 기준으로 manage.py가 있는 경로
+                        + 실행하려는 파일
+                        -&gt; 이와 같이 작성하면 됩니다.</span></p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16"><span style="color: #555555; text-align: start;">manage.py가
+                        C:\Users\Owner\Documents\My-Project\pre-print-service\manage.py에 있다면</span></p>
+                <p data-ke-size="size16"><span style="color: #ee2323;"><b>이 경로를 " " -&gt; 따옴표로 감싸주고 (중요)</b></span></p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">"C:\Users\Owner\Documents\My-Project\pre-print-service\manage.py" reset_orders
+                </p>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16">=&gt; 이와 같이 뒤에 실행하려는 해당 파일을 붙여줍니다.
+                    (reset_orders에.
+                    py는 안 붙여도 됨)</p>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16">이를 인수 추가란에 작성합니다.</p>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16">&nbsp;</p>
+                <p style="color: #555555; text-align: start;" data-ke-size="size18"><b>시작 위치</b></p>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16">마지막으로 시작위치에는 장고 프로젝트의 manage.py 파일이
+                    위치한 디렉터리 경로를 입력해
+                    주면 됩니다.</p>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16">&nbsp;</p>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16"><b><span
+                            style="color: #555555; text-align: start;">-manage.py이 위치한 경로- =&gt; 장고프로젝트가 있는 폴더
+                            경로</span></b></p>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16">
+                    C:\Users\Owner\Documents\My-Project\pre-print-service</p>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16">=&gt; 이를 시작위치란에 작성해 주면 됩니다. (<span
+                        style="color: #ee2323;">이 경로는 " "=&gt; 따옴표로 감싸주면 안 됨)</span></p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <h4 style="color: #000000; text-align: start;" data-ke-size="size20"><b>5. 조건</b></h4>
+                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FclyDZs%2Fbtsp7TWuloP%2FOH7nXXUVulhQGLbfcdA7Mk%2Fimg.png"
+                    alt="">
+                <p data-ke-size="size16">=&gt; 기본 디폴트 설정 값으로 전원란의 "컴퓨터의 AC 전원이 켜져 있는 경우에만 작업 시작" 부분이 체크되어 있습니다.</p>
+                <p data-ke-size="size16">혹시 이대로 설정을 따라왔으나 작동되지 않는다면 위의 체크란을 해제해 줍니다.</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <h4 style="color: #000000; text-align: start;" data-ke-size="size20"><b>6. 정상 작동되는지 확인해 보기</b></h4>
+                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FHyfSO%2Fbtsp34LfQ8k%2FnJhpD7vwsViAkhM28IQkH1%2Fimg.png"
+                    alt="">
+                <p data-ke-size="size16">=&gt; 모든 설정이 끝났습니다.&nbsp;</p>
+                <p data-ke-size="size16">작업 스케줄러 라이브러리를 클릭하고 내리면 우리가 만든 작업 스케줄러 상태가 준비 상태로 있습니다.</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbz7PY4%2FbtsqfAuNnmA%2Fq8ei1hhqjJi5obxXgKQGjK%2Fimg.png"
+                    alt="">
+                <p data-ke-size="size16">=&gt; 이와 같이 OrderFile 테이블에 채워져 있는 데이터들이</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">설정한 시간인 8시 43분이 지나자 명령프롬프트가 깜박이고</p>
+                <p data-ke-size="size16">아래와 같이 스케줄러가 정상 작동하여 데이터가 지워진 것을 확인할 수 있습니다.</p>
+                <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fl2f7T%2Fbtsp8XKUFZN%2FaJhiVLJsAKB1i9o4b5ypeK%2Fimg.png"
+                    alt="">
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">이와 같이 작업 스케줄러를 사용하여 DJango에서 여러 일들을 주기적으로 자동 실행할 수 있습니다.</p>
+                <p data-ke-size="size16"><b>장고 서버가 실행중이더라도 실행중이 아니더라도 윈도우 스케줄러는 정상 작동합니다.</b></p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">장고 내에도 Django Apscheduler라고 해서 스케줄러가 있다고 합니다.</p>
+                <p data-ke-size="size16">혹시 위 단계를 그대로 따라왔음에도 문제가 생겨 도저히 진행되지 않는다면</p>
+                <p data-ke-size="size16">Django Apscheduler를 검색하여 진행해 보길....</p>
+
+                <h3 style="color: #555555; text-align: start;" data-ke-size="size23"><b>아나콘다 다운로드</b></h3>
+                <p data-ke-size="size16">리눅스나 맥os 환경의 경우는 정말 쉽게 Poppler를 다운받을 수 있습니다.</p>
+                <p data-ke-size="size16"><span
+                        style="background-color: #f7f7f8; color: #374151; text-align: left;">-Linux- 패키지
+                        관리자</span><span style="background-color: #f7f7f8; color: #374151; text-align: left;"></span></p>
+                <div style="background-color: #1f1f1f; color: #cccccc;">
+                    sudo&nbsp;apt-get&nbsp;install&nbsp;poppler-utils</div>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16">-<span
+                        style="background-color: #f7f7f8; color: #374151; text-align: left;">macOS- 홈브류</span></p>
+                <div style="background-color: #1f1f1f; color: #cccccc;">brew&nbsp;install&nbsp;poppler</div>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16">&nbsp;</p>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16">하지만 윈도우의 경우 쉽게 다운받기 힘들기 때문에 poppler의
+                    설치를 위해 아나콘다를
+                    다운받아야 합니다.</p>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16">아래 링크에서 설치를 완료합니다.</p>
+                <p style="color: #555555; text-align: start;" data-ke-size="size16"><span
+                        style="color: #555555; text-align: start;"><a
+                            href="https://www.anaconda.com/download">https://www.anaconda.com/download</a></span></p>
+
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">설치가 완료되었다면</p>
+                <p data-ke-size="size16">윈도우 검색창에 Anaconda Powershell Prompt를 실행해줍니다.</p>
+                <p data-ke-size="size16">이후 콘다 프롬프트에서 아래의 단계에 걸쳐 poppler를 설치해줍니다.</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">1. 콘다 환경 생성&nbsp;</p>
+                <p data-ke-size="size16">conda&nbsp;create&nbsp;--name&nbsp;poppler_env</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">2. 콘다 환경 활성화</p>
+                <p data-ke-size="size16">conda&nbsp;activate&nbsp;poppler_env</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">3. poppler 설치</p>
+                <p data-ke-size="size16">conda&nbsp;install&nbsp;-c&nbsp;conda-forge&nbsp;poppler</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">이렇게 하면 poppler가 설치되며 pdfinfo도 설치가 완료됩니다.</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16"><b>pdfinfo의 위치</b></p>
+                <p data-ke-size="size16">위와 같이 잘 과정을 잘 따라왔다면&nbsp;</p>
+                <p data-ke-size="size16">내pc &gt; 로컬디스크C &gt; 사용자 &gt; anaconda3 &gt; Library &gt; bin&nbsp;</p>
+                <p data-ke-size="size16">=&gt; 이 경로에서 pdfinfo를 찾을 수 있습니다.</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <h3 data-ke-size="size23"><b>터미널로 1차 테스트 하기</b></h3>
+                <p data-ke-size="size16"><span style="color: #333333; text-align: start;">poppler<span> 를 잘 설치완료 하였다면 이제
+                            터미널에서 pdf파일
+                            아무거나 잘 나오는지 테스트 해보겠습니다.</span></span></p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16"><b><span
+                            style="color: #333333; text-align: start;"><span>-터미널-</span></span></b></p>
+                <p data-ke-size="size16"><b>C:\Users\Owner\anaconda3\Library\bin\pdfinfo.exe
+                        "C:\Users\Owner\Documents\test\noCount.pdf"</b></p>
+                <p data-ke-size="size16"><span style="color: #333333; text-align: start;"><span>=&gt; 이와 같은 형식으로 맨 앞에
+                            pdfinfo.exe의 경로를 쓴
+                            후 그 뒤에 따옴표로 테스트할 pdf의 경로를 입력해주면 됩니다.</span></span></p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16"><b><span
+                            style="color: #333333; text-align: start;"><span>-출력결과-</span></span></b></p>
+                <p data-ke-size="size16"><span style="color: #333333; text-align: start;"><span>Title: <br />Subject:
+                            <br />Author:
+                            <br />Creator:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Canon&nbsp;iR-ADV&nbsp;4545&nbsp;III
+                            <br />Producer:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adobe&nbsp;PSL&nbsp;1.3e&nbsp;for&nbsp;Canon
+                            <br />CreationDate:&nbsp;&nbsp;&nbsp;&nbsp;Mon&nbsp;Jul&nbsp;24&nbsp;12:03:34&nbsp;2023&nbsp;대한민국&nbsp;표준시
+                            <br />Custom&nbsp;Metadata:&nbsp;no <br />Metadata&nbsp;Stream:&nbsp;yes
+                            <br />Tagged:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no
+                            <br />UserProperties:&nbsp;&nbsp;no
+                            <br />Suspects:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no
+                            <br />Form:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;none
+                            <br />JavaScript:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no
+                            <br />Pages:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5
+                            <br />Encrypted:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no
+                            <br />Page&nbsp;size:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;595.2&nbsp;x&nbsp;841.8&nbsp;pts&nbsp;(A4)
+                            <br />Page&nbsp;rot:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+                            <br />File&nbsp;size:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;17664592&nbsp;bytes
+                            <br />Optimized:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no
+                            <br />PDF&nbsp;version:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.4</span></span></p>
+                <p data-ke-size="size16"><span style="color: #333333; text-align: start;"><span>=&gt; 이렇게 정상적으로 문제가 있던
+                            pdf의 모든 정보와 페이지
+                            수까지 잘 나오는 것을 확인할 수 있습니다.</span></span></p>
+                <h3 data-ke-size="size23">&nbsp;</h3>
+                <h3 data-ke-size="size23"><b><span style="color: #333333; text-align: start;"><span>장고 프로젝트에서 파이썬으로 페이지
+                                수
+                                확인하기</span></span></b></h3>
+                <p data-ke-size="size16"><span style="color: #333333; text-align: start;"><span>문제가 잘 해결되었으니 이제 파이썬으로 이를
+                            자동화
+                            해보겠습니다.</span></span></p>
+                <div style="background-color: #1f1f1f; color: #cccccc;">
+                    <div>
+                        <div><span style="color: #c586c0;">import</span><span style="color: #cccccc;"> </span><span
+                                style="color: #4ec9b0;">subprocess</span><span style="color: #cccccc;"> </span></div>
+                        <div><span style="color: #c586c0;">import</span><span style="color: #cccccc;"> </span><span
+                                style="color: #4ec9b0;">tempfile</span></div>
+                    </div>
+                    <div>&nbsp;</div>
+                    <div><span style="color: #569cd6;">def</span><span style="color: #cccccc;"> </span><span
+                            style="color: #dcdcaa;">get_pdf_page_count</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">pdf_path</span><span style="color: #cccccc;">):</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">cmd</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;">
+                            [</span><span style="color: #ce9178;">"C:</span><span style="color: #d7ba7d;">\\</span><span
+                            style="color: #ce9178;">Users</span><span style="color: #d7ba7d;">\\</span><span
+                            style="color: #ce9178;">Owner</span><span style="color: #d7ba7d;">\\</span><span
+                            style="color: #ce9178;">anaconda3</span><span style="color: #d7ba7d;">\\</span><span
+                            style="color: #ce9178;">Library</span><span style="color: #d7ba7d;">\\</span><span
+                            style="color: #ce9178;">bin</span><span style="color: #d7ba7d;">\\</span><span
+                            style="color: #ce9178;">pdfinfo.exe"</span><span style="color: #cccccc;">, </span><span
+                            style="color: #9cdcfe;">pdf_path</span><span style="color: #cccccc;">]</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">try</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">output</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">subprocess</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">run</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">cmd</span><span style="color: #cccccc;">, </span><span
+                            style="color: #9cdcfe;">stdout</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #4ec9b0;">subprocess</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">PIPE</span><span style="color: #cccccc;">, </span><span
+                            style="color: #9cdcfe;">stderr</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #4ec9b0;">subprocess</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">PIPE</span><span style="color: #cccccc;">, </span><span
+                            style="color: #9cdcfe;">check</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #569cd6;">True</span><span style="color: #cccccc;">)</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">for</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">line</span><span style="color: #cccccc;">
+                        </span><span style="color: #c586c0;">in</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">output</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">stdout</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">decode</span><span style="color: #cccccc;">(</span><span
+                            style="color: #ce9178;">'utf-8'</span><span style="color: #cccccc;">).</span><span
+                            style="color: #dcdcaa;">splitlines</span><span style="color: #cccccc;">():</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">if</span><span style="color: #cccccc;"> </span><span
+                            style="color: #ce9178;">"Pages:"</span><span style="color: #cccccc;"> </span><span
+                            style="color: #569cd6;">in</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">line</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        </span><span style="color: #c586c0;">return</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">int</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">line</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">split</span><span style="color: #cccccc;">(</span><span
+                            style="color: #ce9178;">":"</span><span style="color: #cccccc;">)[</span><span
+                            style="color: #b5cea8;">1</span><span style="color: #cccccc;">].</span><span
+                            style="color: #dcdcaa;">strip</span><span style="color: #cccccc;">())</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">return</span><span style="color: #cccccc;"> </span><span
+                            style="color: #b5cea8;">0</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">except</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">subprocess</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">CalledProcessError</span><span style="color: #cccccc;">:</span>
+                    </div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">return</span><span style="color: #cccccc;"> </span><span
+                            style="color: #b5cea8;">0</span></div>
+                    <br />
+                    <div><span style="color: #569cd6;">def</span><span style="color: #cccccc;"> </span><span
+                            style="color: #dcdcaa;">print_detail</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">req</span><span style="color: #cccccc;">):</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; </span><span style="color: #c586c0;">if</span><span
+                            style="color: #cccccc;"> </span><span style="color: #9cdcfe;">req</span><span
+                            style="color: #cccccc;">.method </span><span style="color: #d4d4d4;">==</span><span
+                            style="color: #cccccc;">
+                        </span><span style="color: #ce9178;">"GET"</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">if</span><span style="color: #cccccc;"> </span><span
+                            style="color: #569cd6;">not</span><span style="color: #cccccc;">
+                        </span><span style="color: #9cdcfe;">req</span><span
+                            style="color: #cccccc;">.user.is_authenticated:</span>
+                    </div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">return</span><span style="color: #cccccc;"> </span><span
+                            style="color: #dcdcaa;">redirect</span><span style="color: #cccccc;">(</span><span
+                            style="color: #ce9178;">'accounts:login'</span><span style="color: #cccccc;">)</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">else</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">return</span><span style="color: #cccccc;"> </span><span
+                            style="color: #dcdcaa;">render</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">req</span><span style="color: #cccccc;">, </span><span
+                            style="color: #ce9178;">"print_detail.html"</span><span style="color: #cccccc;">)</span>
+                    </div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">elif</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">req</span><span style="color: #cccccc;">.method </span><span
+                            style="color: #d4d4d4;">==</span><span style="color: #cccccc;">
+                        </span><span style="color: #ce9178;">"POST"</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">files</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">req</span><span style="color: #cccccc;">.FILES.getlist(</span><span
+                            style="color: #ce9178;">'files'</span><span style="color: #cccccc;">)</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">color</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">req</span><span style="color: #cccccc;">.POST[</span><span
+                            style="color: #ce9178;">'color'</span><span style="color: #cccccc;">]</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">pw</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;">
+                        </span><span style="color: #9cdcfe;">req</span><span style="color: #cccccc;">.POST[</span><span
+                            style="color: #ce9178;">'pw'</span><span style="color: #cccccc;">]</span></div>
+                    <br />
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">if</span><span style="color: #cccccc;"> </span><span
+                            style="color: #569cd6;">not</span><span style="color: #cccccc;">
+                        </span><span style="color: #9cdcfe;">files</span><span style="color: #cccccc;"> </span><span
+                            style="color: #569cd6;">or</span><span style="color: #cccccc;"> </span><span
+                            style="color: #569cd6;">not</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">pw</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #4ec9b0;">messages</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">error</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">req</span><span style="color: #cccccc;">, </span><span
+                            style="color: #ce9178;">"비밀번호
+                            4자리를 채워주세요"</span><span style="color: #cccccc;">)</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">return</span><span style="color: #cccccc;"> </span><span
+                            style="color: #dcdcaa;">render</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">req</span><span style="color: #cccccc;">, </span><span
+                            style="color: #ce9178;">"print_detail.html"</span><span style="color: #cccccc;">)</span>
+                    </div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #6a9955;"># 페이지 계산</span>
+                    </div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">total_pages</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;"> </span><span
+                            style="color: #b5cea8;">0</span>
+                    </div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">for</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">file</span><span style="color: #cccccc;">
+                        </span><span style="color: #c586c0;">in</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">files</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">with</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">tempfile</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">NamedTemporaryFile</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">delete</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #569cd6;">False</span><span style="color: #cccccc;">, </span><span
+                            style="color: #9cdcfe;">suffix</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #ce9178;">".pdf"</span><span style="color: #cccccc;">) </span><span
+                            style="color: #c586c0;">as</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">tmpfile</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        </span><span style="color: #c586c0;">for</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">chunk</span><span style="color: #cccccc;"> </span><span
+                            style="color: #c586c0;">in</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">file</span><span style="color: #cccccc;">.chunks():</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp;
+                        </span><span style="color: #9cdcfe;">tmpfile</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">write</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">chunk</span><span style="color: #cccccc;">)</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span>
+                    </div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        </span><span style="color: #9cdcfe;">total_pages</span><span style="color: #cccccc;">
+                        </span><span style="color: #d4d4d4;">+=</span><span style="color: #cccccc;"> </span><span
+                            style="color: #dcdcaa;">get_pdf_page_count</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">tmpfile</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">name</span><span style="color: #cccccc;">)</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">order_price</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">total_pages</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">*</span><span style="color: #cccccc;"> </span><span
+                            style="color: #b5cea8;">100</span></div>
+                    <br />
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">order</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">Order</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">objects</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">create</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">order_user</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #9cdcfe;">req</span><span style="color: #cccccc;">.user, </span><span
+                            style="color: #9cdcfe;">order_price</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #9cdcfe;">order_price</span><span style="color: #cccccc;">, </span><span
+                            style="color: #9cdcfe;">order_pw</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #9cdcfe;">pw</span><span style="color: #cccccc;">, </span><span
+                            style="color: #9cdcfe;">order_color</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #9cdcfe;">color</span><span style="color: #cccccc;">)</span></div>
+                    <br />
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">for</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">file</span><span style="color: #cccccc;">
+                        </span><span style="color: #c586c0;">in</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">files</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #4ec9b0;">OrderFile</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">objects</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">create</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">order</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #9cdcfe;">order</span><span style="color: #cccccc;">, </span><span
+                            style="color: #9cdcfe;">file</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #9cdcfe;">file</span><span style="color: #cccccc;">)</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">return</span><span style="color: #cccccc;"> </span><span
+                            style="color: #dcdcaa;">redirect</span><span style="color: #cccccc;">(</span><span
+                            style="color: #ce9178;">'payment'</span><span style="color: #cccccc;">)</span></div>
+                </div>
+                <p data-ke-size="size16">=&gt; 전체코드는 다음과 같다.&nbsp;</p>
+                <p data-ke-size="size16">자세히 설명해보자면</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16"><b>-페이지 수 추출 함수-</b></p>
+                <div style="background-color: #1f1f1f; color: #cccccc;">
+                    <div><span style="color: #c586c0;">import</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">subprocess</span><span style="color: #cccccc;"> </span></div>
+                    <br />
+                    <div><span style="color: #569cd6;">def</span><span style="color: #cccccc;"> </span><span
+                            style="color: #dcdcaa;">get_pdf_page_count</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">pdf_path</span><span style="color: #cccccc;">):</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">cmd</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;">
+                            [</span><span style="color: #ce9178;">"C:</span><span style="color: #d7ba7d;">\\</span><span
+                            style="color: #ce9178;">Users</span><span style="color: #d7ba7d;">\\</span><span
+                            style="color: #ce9178;">Owner</span><span style="color: #d7ba7d;">\\</span><span
+                            style="color: #ce9178;">anaconda3</span><span style="color: #d7ba7d;">\\</span><span
+                            style="color: #ce9178;">Library</span><span style="color: #d7ba7d;">\\</span><span
+                            style="color: #ce9178;">bin</span><span style="color: #d7ba7d;">\\</span><span
+                            style="color: #ce9178;">pdfinfo.exe"</span><span style="color: #cccccc;">, </span><span
+                            style="color: #9cdcfe;">pdf_path</span><span style="color: #cccccc;">]</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">try</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">output</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">subprocess</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">run</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">cmd</span><span style="color: #cccccc;">, </span><span
+                            style="color: #9cdcfe;">stdout</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #4ec9b0;">subprocess</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">PIPE</span><span style="color: #cccccc;">, </span><span
+                            style="color: #9cdcfe;">stderr</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #4ec9b0;">subprocess</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">PIPE</span><span style="color: #cccccc;">, </span><span
+                            style="color: #9cdcfe;">check</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #569cd6;">True</span><span style="color: #cccccc;">)</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">for</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">line</span><span style="color: #cccccc;">
+                        </span><span style="color: #c586c0;">in</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">output</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">stdout</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">decode</span><span style="color: #cccccc;">(</span><span
+                            style="color: #ce9178;">'utf-8'</span><span style="color: #cccccc;">).</span><span
+                            style="color: #dcdcaa;">splitlines</span><span style="color: #cccccc;">():</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">if</span><span style="color: #cccccc;"> </span><span
+                            style="color: #ce9178;">"Pages:"</span><span style="color: #cccccc;"> </span><span
+                            style="color: #569cd6;">in</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">line</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        </span><span style="color: #c586c0;">return</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">int</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">line</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">split</span><span style="color: #cccccc;">(</span><span
+                            style="color: #ce9178;">":"</span><span style="color: #cccccc;">)[</span><span
+                            style="color: #b5cea8;">1</span><span style="color: #cccccc;">].</span><span
+                            style="color: #dcdcaa;">strip</span><span style="color: #cccccc;">())</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">return</span><span style="color: #cccccc;"> </span><span
+                            style="color: #b5cea8;">0</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">except</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">subprocess</span><span style="color: #cccccc;">.</span><span
+                            style="color: #4ec9b0;">CalledProcessError</span><span style="color: #cccccc;">:</span>
+                    </div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">return</span><span style="color: #cccccc;"> </span><span
+                            style="color: #b5cea8;">0</span></div>
+                </div>
+                <p data-ke-size="size16">=&gt; 위 함수에서 pdfinfo를 호출하여 PDF파일의 페이지수를 얻습니다. 이후 subprocess모듈을 통해 외부명령을 실행하고
+                    결과를 파싱합니다.<span
+                        style="font-family: AppleSDGothicNeo-Regular, 'Malgun Gothic', '맑은 고딕', dotum, 돋움, sans-serif;"></span>
+                </p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16"><b>-페이지 수 계산 로직-</b></p>
+                <div style="background-color: #1f1f1f; color: #cccccc;">
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #9cdcfe;">total_pages</span><span style="color: #cccccc;"> </span><span
+                            style="color: #d4d4d4;">=</span><span style="color: #cccccc;"> </span><span
+                            style="color: #b5cea8;">0</span>
+                    </div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">for</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">file</span><span style="color: #cccccc;">
+                        </span><span style="color: #c586c0;">in</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">files</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span
+                            style="color: #c586c0;">with</span><span style="color: #cccccc;"> </span><span
+                            style="color: #4ec9b0;">tempfile</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">NamedTemporaryFile</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">delete</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #569cd6;">False</span><span style="color: #cccccc;">, </span><span
+                            style="color: #9cdcfe;">suffix</span><span style="color: #d4d4d4;">=</span><span
+                            style="color: #ce9178;">".pdf"</span><span style="color: #cccccc;">) </span><span
+                            style="color: #c586c0;">as</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">tmpfile</span><span style="color: #cccccc;">:</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        </span><span style="color: #c586c0;">for</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">chunk</span><span style="color: #cccccc;"> </span><span
+                            style="color: #c586c0;">in</span><span style="color: #cccccc;"> </span><span
+                            style="color: #9cdcfe;">file</span><span style="color: #cccccc;">.chunks():</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp;
+                        </span><span style="color: #9cdcfe;">tmpfile</span><span style="color: #cccccc;">.</span><span
+                            style="color: #dcdcaa;">write</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">chunk</span><span style="color: #cccccc;">)</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span>
+                    </div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        </span><span style="color: #9cdcfe;">total_pages</span><span style="color: #cccccc;">
+                        </span><span style="color: #d4d4d4;">+=</span><span style="color: #cccccc;"> </span><span
+                            style="color: #dcdcaa;">get_pdf_page_count</span><span style="color: #cccccc;">(</span><span
+                            style="color: #9cdcfe;">tmpfile</span><span style="color: #cccccc;">.</span><span
+                            style="color: #9cdcfe;">name</span><span style="color: #cccccc;">)</span></div>
+                    <div><span style="color: #cccccc;">&nbsp; &nbsp; &nbsp; &nbsp; </span></div>
+                </div>
+                <p data-ke-size="size16">=&gt; preprint의 경우 웹에서 파일을 업로드 하기에 웹에서 업로드된 파일을 임시파일로 저장하고 이 이미 파일의 경로를</p>
+                <p data-ke-size="size16">get_pdf_page_count함수로 전달하여 페이지 수를 얻습니다.</p>
+                <p data-ke-size="size16">&nbsp;</p>
+                <p data-ke-size="size16">&nbsp;</p>
+
+            </section>
+            <section class="programGuide">
+                <h2 class="subTitle">프로그램 이용 가이드</h2>
+                <p>프로그램을 설치하고 실행하기 위해, 몇 가지 설치해야할 것이 있습니다.</p>
+                <h3 class="listTitle">1. 아래의 링크에서 Java 를 다운로드하고, 설치해주세요.</h3>
+                <p><a href="https://download.oracle.com/java/20/latest/jdk-20_windows-x64_bin.exe (sha256)">java 다운로드 링크</a></p>
+                <h3 class="listTitle">2. intellij 또는 eclipse 등 IDE를 설치해주세요.</h3>
+                <h3 class="listTitle">3. 편집기 내에서 프로젝트폴더를 열고, 실행해주세요.</h3>
+
+            </section>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
