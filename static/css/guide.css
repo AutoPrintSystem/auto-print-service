@@ -1,0 +1,34 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title{
+    width:100%;
+    color: #7EB2FF;
+    font-size: 80px;
+    
+    border-bottom: 5px solid;
+}
+.empty{
+    height:20px;
+}
+.contents{
+    width:80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;   
+}
+.subTitle{
+    color: #515151;
+    font-size:30px;
+    border-bottom: 3px #515151 solid;
+    padding-bottom:10px;
+}
+.listTitle{
+    color:#515151;
+    font-size: 18px;
+    
+}

@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} | pre-print</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?after">
+    <link rel="stylesheet" href="{% static 'css/guide.css' %}?after">
+    {% block additional_head %}
+    {% endblock %}
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-left">
+            <a href="{% url 'main' %}">
+                <img class="logo-image" src="{% static 'img/logo.png' %}" alt="로고">
+            </a>
+        </div>
+        <div class="navbar-center">
+            <a href="{% url 'guide' %}">프로젝트 가이드</a>
+        </div>
+        <div class="navbar-right">
+            <a href="{% url 'remoteprint:mypage' %}">
+                <img class="mypage-image" src="{% static 'img/mypage.png' %}" alt="로고">
+            </a>
+            <a href="{% url 'remoteprint:payment_detail' %}">
+                <img class="payment-image" src="{% static 'img/payment.png' %}" alt="로고">
+            </a>
+        </div>
+    </div>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <div class="footer">
+        <p>60221320 최은택</p>
+        <p>60221340 장소윤</p>
+    </div>
+</body>
+</html>

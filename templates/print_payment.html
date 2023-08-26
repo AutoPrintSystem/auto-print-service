@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}결제페이지{% endblock %}
+
+{% block content %}
+<h1 class="logo">payment-detail</h1>
+<div class="payment-file-container">
+    <h3>파일들:</h3>
+    {% for file in files %}
+        <p>
+            File: {{ file.file.name }}
+            <a href="{{ file.file.url }}" download>다운로드</a>
+        </p>
+    {% endfor %}
+</div>
+
+{% endblock %} 
